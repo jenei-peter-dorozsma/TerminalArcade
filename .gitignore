@@ -1,1 +1,10 @@
 /.DS_Store
+/.Minefield/__pycache__
+TerminalGames/.DS_Store
+TerminalGames/Games/Assets/__pycache__/diceArt.cpython-311.pyc
+TerminalGames/Games/Assets/__pycache__/terminalColors.cpython-311.pyc
+TerminalGames/Games/__pycache__/yahtzee.cpython-311.pyc
+.gitignore
+.gitignore
+TerminalGames/Games/__pycache__/__init__.cpython-311.pyc
+TerminalGames/Games/__pycache__/minefield.cpython-311.pyc
