@@ -12,5 +12,4 @@ if __name__ == "__main__":
 
 # TODO:
 # - automated tests
-# - github
 # - create a GUI for it

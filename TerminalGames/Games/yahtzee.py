@@ -11,7 +11,7 @@ class Yahtzee:
         self.remaining_rolls=0
         self.re_rolls=0
         self.latest_throw=[]
-        self.dice_blocks=[0, 0, 0, 0, 0]
+        self.dice_locks=[0, 0, 0, 0, 0]
         self.msg=''
 
     def reset_score_board(self):
@@ -36,7 +36,7 @@ class Yahtzee:
         self.remaining_rolls=15
         self.re_rolls=2
         self.latest_throw=[]
-        self.dice_blocks=[0, 0, 0, 0, 0]
+        self.dice_locks=[0, 0, 0, 0, 0]
 
     def print_screen(self):
         '''Print gamescreen to terminal'''
@@ -118,9 +118,9 @@ class Yahtzee:
         '''Print rules of the game for the user'''
         print(' Help '.center(60, '-'))
         print('- type R to start a new turn and roll full set of five dice')
-        print('- type A-E to block or unblock a dice')
-        print('- type RR to reroll the unblocked dice')
-        print('- type Q to reroll the unblocked dice')
+        print('- type A-E to lock or unlock a dice')
+        print('- type RR to reroll the unlocked dice')
+        print('- type Q to reroll the unlocked dice')
         print('- type 1-15 save result as combination')
 
     def print_throw(self):
@@ -128,7 +128,7 @@ class Yahtzee:
         if not self.latest_throw==[]:
             for row in range(0, da.DIE_HEIGHT):
                 for index,value in enumerate(self.latest_throw):
-                    if self.dice_blocks[index]:
+                    if self.dice_locks[index]:
                         print(TColor.OKGREEN+da.DICE_ART[value][row]+TColor.ENDC, end='')
                     else:
                         print(da.DICE_ART[value][row], end='')
@@ -144,14 +144,14 @@ class Yahtzee:
         '''Throw with five dice'''
         self.remaining_rolls -= 1
         self.latest_throw = random.sample([1,2,3,4,5,6], counts=[5,5,5,5,5,5], k=5)
-        self.dice_blocks=[0, 0, 0, 0, 0]
+        self.dice_locks=[0, 0, 0, 0, 0]
         self.re_rolls=2
 
     def reroll(self):
-        '''Reroll the unblocked dice'''
+        '''Reroll the unlocked dice'''
         self.re_rolls -= 1
 
-        for key, value in enumerate(self.dice_blocks):
+        for key, value in enumerate(self.dice_locks):
             if value==0:
                 rerolled_die=random.randint(1,6)
                 self.latest_throw[key]=rerolled_die
@@ -184,6 +184,7 @@ class Yahtzee:
                 number_of_pairs = 0
                 for i in range(6, 1, -1):
                     if self.latest_throw.count(i) >= 4:
+                        number_of_pairs = 2
                         combination_value += i * 4
                         break
                     elif self.latest_throw.count(i) >= 2:
@@ -239,13 +240,13 @@ class Yahtzee:
             self.score_board[keys[combination]] = combination_value
             self.latest_throw=[]
 
-    def lock_die(self, block):
+    def lock_die(self, lock):
         '''Lock a die before reroll'''
-        block_index=self.ALPHABET.index(block.lower())
-        if self.dice_blocks[block_index]==1:
-            self.dice_blocks[block_index]=0
+        lock_index=self.ALPHABET.index(lock.lower())
+        if self.dice_locks[lock_index]==1:
+            self.dice_locks[lock_index]=0
         else:
-            self.dice_blocks[block_index]=1
+            self.dice_locks[lock_index]=1
 
     def new_game(self):
         '''Start a new game'''
