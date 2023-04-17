@@ -183,7 +183,10 @@ class Yahtzee:
             elif combination==7:
                 number_of_pairs = 0
                 for i in range(6, 1, -1):
-                    if self.latest_throw.count(i) >= 2:
+                    if self.latest_throw.count(i) >= 4:
+                        combination_value += i * 4
+                        break
+                    elif self.latest_throw.count(i) >= 2:
                         number_of_pairs += 1
                         combination_value += i * 2
                 if not number_of_pairs==2:
@@ -227,8 +230,8 @@ class Yahtzee:
                     combination_value = sum(self.latest_throw)
             elif combination==13:
                 for i in range(6, 1, -1):
-                    if self.latest_throw.count(i) >= 2:
-                        combination_value = i * 2
+                    if self.latest_throw.count(i) == 5:
+                        combination_value = i * 5
                         break
             elif combination==14:
                 combination_value = sum(self.latest_throw)
