@@ -11,14 +11,18 @@ class TicTacToe:
 
     def __init__(self):
         self.msg=''
-        self.gameboard = [self.EMPTY_FIELD for x in range(10) ]
+        self.gameboard = [self.EMPTY_FIELD for x in range(9) ]
         self.player_mark=self.MARK_X
         self.computer_mark=self.MARK_O
+        self.end_of_game = False
 
     def new_game(self):
-        self.print_screen()
+        self.msg=''
+        self.gameboard = [self.EMPTY_FIELD for x in range(9) ]
         self.player_mark=self.MARK_X
         self.computer_mark=self.MARK_O
+        self.end_of_game=False
+        self.print_screen()
 
     def print_screen(self):
         '''Print gamescreen to terminal'''
@@ -39,23 +43,35 @@ class TicTacToe:
     def user_consol(self):
         print(' Help '.center(60, '-'))
         self.print_board(range(1,10))
+        # print('Gameboard:')
+        # print(self.gameboard)
+        # print('Empty fields:')
+        # print(self.gameboard.count(self.EMPTY_FIELD))
         print(' User consol '.center(60, '-'))
 
         print(self.msg)
-        command=input('\nWhere would you like place a mark (1-9)?')
+        if self.end_of_game:
+            command=input('\nWould you like to play new game?')
+        else:
+            command=input('\nWhere would you like place a mark (1-9)?')
         self.msg=''
 
         try:
-            if command ==  'q':
+            if self.end_of_game and command in ('y', 'yes'):
+                self.new_game()
+            elif self.end_of_game and command in ('n', 'no'):
                 exit(0)
-            if 0 < int(command) < 10:
+            elif command ==  'q':
+                exit(0)
+            elif 0 < int(command) < 10:
                 if self.gameboard[int(command)-1] != self.EMPTY_FIELD:
-                    self.msg="This field is already taken, select another one!"
+                    self.msg='This field is already taken, select another one!'
                 else:
                     self.place_a_mark(int(command)-1, self.player_mark)
-                    self.answer_step()
+                    if not self.end_of_game:
+                        self.answer_step()
             else:
-                self.msg="Number must be between 1-9!"
+                self.msg='Number must be between 1-9!'
         except ValueError:
             self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
 
@@ -63,6 +79,27 @@ class TicTacToe:
 
     def place_a_mark(self, place, mark):
         self.gameboard[place]=mark
+        self.check_end_of_game(place)
+
+    def check_end_of_game(self, last_step):
+        paths=self.get_all_path()
+        paths = [path for path in paths if last_step in path]
+        for path in paths:
+            line_items=set()
+            for i in path:
+                line_items.add(self.gameboard[i])
+
+            if len(line_items)==1:
+                self.end_of_game=True
+                if self.gameboard[last_step]==self.player_mark:
+                    self.msg='Player won this game!'
+                else:
+                    self.msg='Computer won this game!'
+                break
+
+        if self.gameboard.count(self.EMPTY_FIELD)==0:
+            self.end_of_game=True
+            self.msg='There are no possible moves. It is a TIE!'
 
     def check_row_sum(self, i, check_value):
         check_sum = 0
@@ -173,8 +210,20 @@ class TicTacToe:
 
         return paths
 
+    def get_possible_forking_paths(self, player_mark):
+        paths = self.get_possible_winning_paths(player_mark)
+        possible_paths = []
+
+        for path in paths:
+            for i in path:
+                if self.gameboard[i]==player_mark:
+                    possible_paths.append(path)
+                    break
+
+        return possible_paths
+
     def get_forking_step(self):
-        possible_paths=self.get_possible_winning_paths(self.computer_mark)
+        possible_paths=self.get_possible_forking_paths(self.computer_mark)
         for key, value in enumerate(self.gameboard):
             if value==self.EMPTY_FIELD:
                 count = sum(1 for path in possible_paths if key in path)
@@ -183,7 +232,8 @@ class TicTacToe:
         return -1
 
     def get_block_fork_step(self):
-        possible_paths=self.get_possible_winning_paths(self.player_mark)
+        possible_paths=self.get_possible_forking_paths(self.player_mark)
+
         for key, value in enumerate(self.gameboard):
             if value==self.EMPTY_FIELD:
                 count = sum(1 for path in possible_paths if key in path)
