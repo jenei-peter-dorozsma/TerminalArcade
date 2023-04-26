@@ -156,11 +156,16 @@ class TicTacToe:
 
         return -1
 
-    def get_possible_winning_paths(self, player_mark):
+    def get_all_path(self):
         rows = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cols = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
         diags = [[0, 4, 8], [2, 4, 6]]
         paths = rows + cols + diags
+
+        return paths
+
+    def get_possible_winning_paths(self, player_mark):
+        paths = self.get_all_path()
 
         for key, value in enumerate(self.gameboard):
             if value!=player_mark and value!=self.EMPTY_FIELD:
