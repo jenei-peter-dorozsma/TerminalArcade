@@ -72,3 +72,14 @@ HAND_ART = {
 
 HAND_HEIGHT = len(HAND_ART['Rock'])
 HAND_WIDTH = len(HAND_ART['Rock'][0])
+
+def reverse_art_line(art):
+    art=art[::-1]
+    art = art.replace(')', '#')
+    art = art.replace('(', ')')
+    art = art.replace('#', '(')
+    art = art.replace('/', '#')
+    art = art.replace('\\', '/')
+    art = art.replace('#', '\\')
+
+    return art

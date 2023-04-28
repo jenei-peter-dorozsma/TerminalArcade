@@ -1,36 +1,69 @@
-import os
+import os, random
 from Games.Assets.terminalColors import TColor
 from Games import minefield, yahtzee, tictactoe, rockPaperScissors
+import Games.Assets.handArt as ha
+
+
+TERMINAL_ARCDADE = TColor.HEADER + 'T' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKCYAN + 'R' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKGREEN + 'M' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.WARNING + 'I' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.FAIL + 'N' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.HEADER + 'A' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKBLUE + 'L ' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKCYAN + 'A' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKGREEN + 'R' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.WARNING + 'C' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.FAIL + 'A' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.HEADER + 'D' + TColor.ENDC
+TERMINAL_ARCDADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
+
+DESIGN = {
+    'Logo': [
+        '                      ',
+        ' ╔══════════════════╗ ',
+        ' ║  Welcome         ║ ',
+        ' ║        to the    ║ ',
+        f' ║ {TERMINAL_ARCDADE}! ║ ',
+        ' ╚══════════════════╝ ',
+        '                      '
+    ],
+
+    'GameList': [
+        f'{TColor.OKBLUE}1{TColor.ENDC} - Minesweeper',
+        f'{TColor.OKBLUE}2{TColor.ENDC} - Yahtzee',
+        f'{TColor.OKBLUE}3{TColor.ENDC} - Tic Tac Toe',
+        f'{TColor.OKBLUE}4{TColor.ENDC} - Rock Paper Scissors',
+        f'{TColor.OKBLUE}Q{TColor.ENDC} - Quit to terminal'
+    ]
+}
 
 def print_main_screen(message=''):
     os.system('clear')
-    intro = ' Welcome to the '
-    intro +=  TColor.HEADER + 'T' + TColor.ENDC
-    intro +=  TColor.OKBLUE + 'E' + TColor.ENDC
-    intro +=  TColor.OKCYAN + 'R' + TColor.ENDC
-    intro +=  TColor.OKGREEN + 'M' + TColor.ENDC
-    intro +=  TColor.WARNING + 'I' + TColor.ENDC
-    intro +=  TColor.FAIL + 'N' + TColor.ENDC
-    intro +=  TColor.HEADER + 'A' + TColor.ENDC
-    intro +=  TColor.OKBLUE + 'L ' + TColor.ENDC
-    intro +=  TColor.OKCYAN + 'A' + TColor.ENDC
-    intro +=  TColor.OKGREEN + 'R' + TColor.ENDC
-    intro +=  TColor.WARNING + 'C' + TColor.ENDC
-    intro +=  TColor.FAIL + 'A' + TColor.ENDC
-    intro +=  TColor.HEADER + 'D' + TColor.ENDC
-    intro +=  TColor.OKBLUE + 'E' + TColor.ENDC
-    intro +=  '!!! '
+    hand_signs = ('Rock', 'Paper', 'Scissors', 'Metal', 'Pinky', 'Yes', 'Shaka')
+    lefty = random.choice(hand_signs)
+    left_art = ha.HAND_ART[lefty]
+    righty = random.choice(hand_signs)
+    right_art = ha.HAND_ART[righty]
 
-    print(intro.center(60, '='))
-    print('')
-    print(f'   {TColor.OKBLUE}1{TColor.ENDC} - Minesweeper')
-    print(f'   {TColor.OKBLUE}2{TColor.ENDC} - Yahtzee')
-    print(f'   {TColor.OKBLUE}3{TColor.ENDC} - Tic Tac Toe')
-    print(f'   {TColor.OKBLUE}4{TColor.ENDC} - Rock Paper Scissors')
-    print(f'   {TColor.OKBLUE}Q{TColor.ENDC} - Quit to terminal')
-    print('')
+    for row in range(0, ha.HAND_HEIGHT):
+        left_art_row=left_art[row]
+        logo_row=DESIGN['Logo'][row]
+        right_art_row=right_art[row]
+        right_art_row=ha.reverse_art_line(right_art_row)
+        print(f'{TColor.OKBLUE}{left_art_row}{TColor.ENDC}', end='')
+        print(logo_row, end='')
+        print(f'{TColor.FAIL}{right_art_row}{TColor.ENDC}')
 
-    print(message)
+    # print(left_art)
+    # print(right_art)
+
+    for i in DESIGN['GameList']:
+        print(''.center(21, ' '), end='')
+        print(i)
+
+    print(f'\n{message}')
     message=''
     command=input("Which game would you like to play?")
 
@@ -56,4 +89,4 @@ def print_main_screen(message=''):
 
 if __name__ == "__main__":
     print_main_screen()
-    print('Thank you for playing! Have a nice day!')
+    print(f'{TColor.OKGREEN}Thank you for playing! Have a nice day!{TColor.ENDC}')

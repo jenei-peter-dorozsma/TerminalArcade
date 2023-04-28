@@ -1,5 +1,4 @@
-import random
-import os
+import os, random
 from Games.Assets.terminalColors import TColor
 import Games.Assets.diceArt as da
 
@@ -84,7 +83,7 @@ class Yahtzee:
 
         try:
             if command.lower() == 'q':
-                exit(0)
+                return 0
             if command.lower() == 'r':
                 if not self.latest_throw == []:
                     self.msg=TColor.WARNING+'Save your throw before next turn.'+TColor.ENDC
@@ -120,7 +119,7 @@ class Yahtzee:
         print('- type R to start a new turn and roll full set of five dice')
         print('- type A-E to lock or unlock a dice')
         print('- type RR to reroll the unlocked dice')
-        print('- type Q to reroll the unlocked dice')
+        print('- type Q exit game and return to main screen')
         print('- type 1-15 save result as combination')
 
     def print_throw(self):

@@ -1,5 +1,4 @@
-import random
-import os
+import os, random
 from Games.Assets.terminalColors import TColor
 import Games.Assets.handArt as ha
 
@@ -49,17 +48,6 @@ class RockPaperScissors:
         self.print_score_board()
         self.user_consol()
 
-    def reverse_art(self, art):
-        art=art[::-1]
-        art = art.replace(')', '#')
-        art = art.replace('(', ')')
-        art = art.replace('#', '(')
-        art = art.replace('/', '#')
-        art = art.replace('\\', '/')
-        art = art.replace('#', '\\')
-
-        return art
-
     def print_score_board(self):
         print(' Status '.center(60, '-'))
         print(' Player score '.center(30, ' '), end='')
@@ -70,7 +58,7 @@ class RockPaperScissors:
             for row in range(0, ha.HAND_HEIGHT):
                 player_art_row=ha.HAND_ART[self.OPTIONS[self.player_take]['art']][row]
                 computer_art_row=ha.HAND_ART[self.OPTIONS[self.computer_take]['art']][row]
-                computer_art_row=self.reverse_art(computer_art_row)
+                computer_art_row=ha.reverse_art_line(computer_art_row)
                 print(f'{TColor.OKBLUE}{player_art_row}{TColor.ENDC}'.center(35, ' '), end='')
                 print(f'{TColor.FAIL}{computer_art_row}{TColor.ENDC}'.center(35, ' '))
             print('')
@@ -82,11 +70,11 @@ class RockPaperScissors:
         print(' User consol '.center(60, '-'))
 
         print(self.msg)
-        command=input('\nWhat do you choose (r-Rock, p-Paper, s-scissors)?')
+        command=input('\nWhat do you choose (r-Rock, p-Paper, s-Scissors, q-End game)?')
         self.msg=''
 
-        if command == 'q':
-            exit(0)
+        if command.lower() == 'q':
+            return 0
         elif command.lower() in ('r', 'rock'):
             self.answer_step('r')
         elif command.lower() in ('p', 'paper'):

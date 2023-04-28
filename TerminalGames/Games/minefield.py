@@ -1,6 +1,5 @@
 '''Terminal based Minesweeper game'''
-import random
-import os
+import os, random
 from Games.Assets.terminalColors import TColor
 
 class Minesweeper():
@@ -206,6 +205,13 @@ class Minesweeper():
             self.msg=''
             self.update_screen()
 
+    def print_help(self):
+        '''Print rules of the game for the user'''
+        print(' Help '.center(60, '-'))
+        print(f'- type "{TColor.OKBLUE}COLUMN,ROW{TColor.ENDC}" to check a cell')
+        print(f'- type "{TColor.OKBLUE}COLUMN,ROW,F{TColor.ENDC}" to flag of unflag a cell')
+        print(f'- type "{TColor.OKBLUE}Q{TColor.ENDC}" exit game and return to main screen')
+
     def update_screen(self):
         '''Draw the field and the user consol to the terminal sceen'''
         os.system('clear')
@@ -222,26 +228,21 @@ class Minesweeper():
     def guess_consol(self):
         '''Display of user consol and handling of input data'''
         if not self.end_of_game:
-            rules = '\nAdd your guesses, type:\n'
-            rules += f' - "{TColor.OKBLUE}q{TColor.ENDC}" for quit\n'
-            rules += f' - "{TColor.OKBLUE}column,row{TColor.ENDC}" '
-            rules += 'for checking a cell\n'
-            rules += f' - "{TColor.OKBLUE}column,row,f{TColor.ENDC}" '
-            rules += 'for placing or removing a flag from a cell\n'
-            print(rules)
+            self.print_help()
 
+        print(' User consol '.center(60, '-'))
         print(f'\n {TColor.WARNING}{self.msg}{TColor.ENDC}')
         self.msg=''
 
         if not self.end_of_game:
-            guess=input('make a guess "column, row": ')
+            guess=input('What would you like to do? ')
 
-            if guess=='q':
+            if guess.lower()=='q':
                 self.end_of_game = True
             else:
                 try:
                     guess_coords=guess.split(',')
-                    if len(guess_coords)>2 and guess_coords[2]=='f':
+                    if len(guess_coords)>2 and guess_coords[2].lower()=='f':
                         self.flag(int(guess_coords[0])-1, int(guess_coords[1])-1)
                     else:
                         if self.first_guess:

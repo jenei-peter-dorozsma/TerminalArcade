@@ -1,5 +1,4 @@
-import random
-import os
+import os, random
 from Games.Assets.terminalColors import TColor
 
 class TicTacToe:
@@ -43,10 +42,6 @@ class TicTacToe:
     def user_consol(self):
         print(' Help '.center(60, '-'))
         self.print_board(range(1,10))
-        # print('Gameboard:')
-        # print(self.gameboard)
-        # print('Empty fields:')
-        # print(self.gameboard.count(self.EMPTY_FIELD))
         print(' User consol '.center(60, '-'))
 
         print(self.msg)
@@ -62,7 +57,7 @@ class TicTacToe:
             elif self.end_of_game and command in ('n', 'no'):
                 exit(0)
             elif command ==  'q':
-                exit(0)
+                return 0
             elif 0 < int(command) < 10:
                 if self.gameboard[int(command)-1] != self.EMPTY_FIELD:
                     self.msg='This field is already taken, select another one!'
