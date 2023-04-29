@@ -75,9 +75,6 @@ def print_main_screen(message=''):
         print(logo_row, end='')
         print(f'{TColor.FAIL}{right_art_row}{TColor.ENDC}')
 
-    # print(left_art)
-    # print(right_art)
-
     for i in DESIGN['GameList']:
         print(''.center(21, ' '), end='')
         print(i)
@@ -89,7 +86,7 @@ def print_main_screen(message=''):
     if command == '1':
         game=minefield.Minesweeper()
         # game.admin_mode=True
-        game.new_game('s', 'e')
+        game.new_game()
     elif command == '2':
         game = yahtzee.Yahtzee()
         game.new_game()

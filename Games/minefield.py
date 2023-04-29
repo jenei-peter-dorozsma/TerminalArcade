@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import os
+import re
 import random
 from Games.Assets.terminalColors import TColor
 
@@ -91,9 +92,13 @@ class Minesweeper():
 
                 for j in range(0, self.field_width):
                     if self.show_full_map:
-                        field_display += ' ' + str(self.mfield[i*self.field_width+j].cheat_display()) + ' '
+                        field_display += ' '
+                        field_display += str(self.mfield[i*self.field_width+j].cheat_display())
+                        field_display += ' '
                     else:
-                        field_display += ' ' + str(self.mfield[i*self.field_width+j]) + ' '
+                        field_display += ' '
+                        field_display += str(self.mfield[i*self.field_width+j])
+                        field_display += ' '
 
                 field_display += '\n'
 
@@ -106,9 +111,9 @@ class Minesweeper():
             raw_mfield = random.sample([0, '*'], counts=[safe_fields, self.num_of_mines], k=all_fields)
             self.mfield = list(map(lambda x: self.Cell(x), raw_mfield))
 
-        def first_step_on_the_field(self, x, y):
+        def first_step_on_the_field(self, row, col):
             '''Make sure, that player will not blow up at first dig'''
-            mine_cell_index= x + self.field_width * y
+            mine_cell_index= row + self.field_width * col
             if self.mfield[mine_cell_index].value=='*':
                 safe_cell_list=[]
                 for key, cell in enumerate(self.mfield):
@@ -129,13 +134,13 @@ class Minesweeper():
                     if self.mfield[i*self.field_width+j].value=='*':
                         self.register_mine(j, i)
 
-        def register_mine(self, x,y):
+        def register_mine(self, row, col):
             '''Update minefield cells around the mines'''
             for i in range(-1, 2):
                 for j in range(-1, 2):
-                    vector_index = ((y+i)*self.field_width)+(x+j)
-                    if (-1<(x+j)<self.field_width and
-                            -1<(y+i)<self.field_height and
+                    vector_index = ((col+i)*self.field_width)+(row+j)
+                    if (-1<(row+j)<self.field_width and
+                            -1<(col+i)<self.field_height and
                             self.mfield[vector_index].value!='*'):
                         self.mfield[vector_index].value = self.mfield[vector_index].value + 1
 
@@ -149,13 +154,13 @@ class Minesweeper():
 
         def is_end_of_game(self):
             '''Check if the game is over already'''
-            is_end_of_game=True
+            minefield_is_safe=True
             for i in self.mfield:
                 if i.covered and i.value != '*':
-                    is_end_of_game=False
+                    minefield_is_safe=False
                     break
 
-            return is_end_of_game
+            return minefield_is_safe
 
         def full_map_display(self):
             '''Display the whole map uncovered in admin mode and at the end of game'''
@@ -172,7 +177,52 @@ class Minesweeper():
         self.game_board= ''
         self.first_guess=True
 
-    def new_game(self, size='s', difficulty='e'):
+    def new_game(self):
+        '''
+        Start a new game by selecting the difficulties of the game
+        '''
+        self.end_of_game = False
+        self.chain = set()
+        self.msg=''
+        self.game_board= ''
+        self.first_guess=True
+        has_size=False
+        size=''
+        while not has_size:
+            os.system('clear')
+            print(' Size selection '.center(60, '-'))
+            print('\nHow big field would you like to play on?\n')
+            print('s - Small: 10 x 10')
+            print('m - Medium: 20 x 20')
+            print('l - Large: 30 x 30')
+            print(self.msg)
+            self.msg=''
+            size = input('Selected size: ')
+            if size in ('s', 'm', 'l'):
+                has_size=True
+            else:
+                self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
+
+        has_difficulty=False
+        difficulty=''
+        while not has_difficulty:
+            os.system('clear')
+            print(' Difficulty selection '.center(60, '-'))
+            print('\nHow difficult game would you like to play?\n')
+            print('e - Easy: 10% of the field are mines')
+            print('m - Medium: 20% of the field are mines')
+            print('h - Hard: 30% of the field are mines')
+            print(self.msg)
+            self.msg=''
+            difficulty = input('Selected difficuly: ')
+            if difficulty in ('e', 'm', 'h'):
+                has_difficulty=True
+            else:
+                self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
+
+        self.start_game(size, difficulty)
+
+    def start_game(self, size='s', difficulty='e'):
         '''
         Start a preconfigured game, 
         the size of the field can be "S" (for small), "M" (for medium) or "L" (for large)
@@ -249,64 +299,80 @@ class Minesweeper():
         print(f'\n {TColor.WARNING}{self.msg}{TColor.ENDC}')
         self.msg=''
 
+        start_a_new_game=False
         if not self.end_of_game:
             guess=input('What would you like to do? ')
 
             if guess.lower()=='q':
-                self.end_of_game = True
+                return
             else:
-                try:
+                pattern = r'\d+,\d+(,f)?$'
+                match = re.match(pattern, guess)
+                if match is not None:
                     guess_coords=guess.split(',')
+                    guess_row=int(guess_coords[0])-1
+                    guess_column=int(guess_coords[1])-1
                     if len(guess_coords)>2 and guess_coords[2].lower()=='f':
-                        self.flag(int(guess_coords[0])-1, int(guess_coords[1])-1)
+                        self.flag(guess_row, guess_column)
                     else:
                         if self.first_guess:
-                            self.game_board.first_step_on_the_field(int(guess_coords[0])-1, int(guess_coords[1])-1)
+                            self.game_board.first_step_on_the_field(guess_row, guess_column)
                             self.first_guess=False
-                        self.dig(int(guess_coords[0])-1, int(guess_coords[1])-1)
-                    self.update_screen()
-                except Exception as err:
-                    self.msg=err
-                    self.update_screen()
+                        self.dig(guess_row, guess_column)
+                else:
+                    self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
+        else:
+            command=input('Would you like to play new game (y/n)?')
+            if command=='y':
+                start_a_new_game=True
+            elif command=='n':
+                return
+            else:
+                self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
 
-    def flag(self, x, y):
-        '''"Flag or unflag a cell on the minefield'''
-        if self.game_board.is_valid_cell(x, y):
-            if not self.game_board.get_cell(x, y).covered:
+        if start_a_new_game:
+            self.new_game()
+        else:
+            self.update_screen()
+
+    def flag(self, row, col):
+        '''Flag or unflag a cell on the minefield'''
+        if self.game_board.is_valid_cell(row, col):
+            if not self.game_board.get_cell(row, col).covered:
                 self.msg='You can not flag a discovered cell.'
             else:
-                self.game_board.get_cell(x, y).switch_flag()
+                self.game_board.get_cell(row, col).switch_flag()
         else:
             self.msg="Try to guess within the field."
 
-    def chain_reaction(self, x, y):
+    def chain_reaction(self, row, col):
         '''Chain discover neighbour cells of empty cells'''
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if (self.game_board.is_valid_cell(x+j, y+i) and
-                        self.game_board.get_cell(x+j, y+i).value !='*' and
-                        self.game_board.get_cell(x+j, y+i).covered):
-                    self.game_board.get_cell(x+j, y+i).covered=False
-                    if self.game_board.get_cell(x+j, y+i).value == 0:
-                        self.chain.add((x+j, y+i))
+                if (self.game_board.is_valid_cell(row+j, col+i) and
+                        self.game_board.get_cell(row+j, col+i).value !='*' and
+                        self.game_board.get_cell(row+j, col+i).covered):
+                    self.game_board.get_cell(row+j, col+i).covered=False
+                    if self.game_board.get_cell(row+j, col+i).value == 0:
+                        self.chain.add((row+j, col+i))
         if len(self.chain)>0:
             empty_cell=self.chain.pop()
             self.chain_reaction(empty_cell[0], empty_cell[1])
 
-    def dig(self, x, y):
-        '''"Open a cell on the minefield'''
-        if self.game_board.is_valid_cell(x, y):
-            if self.game_board.get_cell(x, y).value=='*':
+    def dig(self, row, col):
+        '''Open a cell on the minefield'''
+        if self.game_board.is_valid_cell(row, col):
+            if self.game_board.get_cell(row, col).value=='*':
                 self.msg=TColor.FAIL+"BOOM! You stepped on a mine!"+TColor.ENDC
                 self.end_of_game=True
-            elif not self.game_board.get_cell(x, y).covered:
+            elif not self.game_board.get_cell(row, col).covered:
                 self.msg="You already checked this cell."
-            elif self.game_board.get_cell(x, y).flagged:
+            elif self.game_board.get_cell(row, col).flagged:
                 self.msg="First remove the flag from the cell."
             else:
-                self.game_board.get_cell(x, y).covered = False
-                if self.game_board.get_cell(x, y).value == 0:
-                    self.chain_reaction(x, y)
+                self.game_board.get_cell(row, col).covered = False
+                if self.game_board.get_cell(row, col).value == 0:
+                    self.chain_reaction(row, col)
         else:
             self.msg="Try to guess within the field."
 

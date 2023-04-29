@@ -1,6 +1,4 @@
 .gitignore
 /.DS_Store
-/.Minefield/__pycache__
-TerminalGames/.DS_Store
-TerminalGames/Games/Assets/__pycache__/*
-TerminalGames/Games/__pycache__/*
+/Games/Assets/__pycache__/*
+/Games/__pycache__/*

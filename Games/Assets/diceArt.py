@@ -1,3 +1,5 @@
+'''Ascii art for dice faces'''
+
 DICE_ART = {
     1: [
         "┌─────────┐",

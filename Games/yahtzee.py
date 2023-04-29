@@ -73,12 +73,13 @@ class Yahtzee:
 
         for slot, score in self.score_board.items():
             item_index += 1
+            column_data=f'{item_index}) {TColor.BOLD}{slot}:{TColor.ENDC} {score}'
 
             if left_column:
-                print(f'{item_index}) {TColor.BOLD}{slot}:{TColor.ENDC} {score}'.ljust(40, ' '), end='')
+                print(column_data.ljust(40, ' '), end='')
                 left_column=not left_column
             else:
-                print(f'{item_index}) {TColor.BOLD}{slot}:{TColor.ENDC} {score}'.ljust(20, ' '))
+                print(column_data.ljust(20, ' '))
                 left_column=not left_column
 
             if not score=='-':
