@@ -1,4 +1,6 @@
-import os, random
+'''Terminal Arcade: small single player games for terminal'''
+import os
+import random
 from Games.Assets.terminalColors import TColor
 from Games import minefield, yahtzee, tictactoe, rockPaperScissors
 import Games.Assets.handArt as ha
@@ -40,6 +42,9 @@ DESIGN = {
 }
 
 def print_main_screen(message=''):
+    '''
+    Display and handle main screen for Terminal Arcade
+    '''
     os.system('clear')
     hand_signs = ('Rock', 'Paper', 'Scissors', 'Metal', 'Pinky', 'Yes', 'Shaka')
     lefty = random.choice(hand_signs)
@@ -81,7 +86,7 @@ def print_main_screen(message=''):
         game = rockPaperScissors.RockPaperScissors()
         game.new_game()
     elif command.lower() == 'q':
-        return 0
+        return
     else:
         message=TColor.FAIL+'There is no such parameter'+TColor.ENDC
 

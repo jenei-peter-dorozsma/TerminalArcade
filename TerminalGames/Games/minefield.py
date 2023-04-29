@@ -1,9 +1,10 @@
 '''Terminal based Minesweeper game'''
-import os, random
+import os
+import random
 from Games.Assets.terminalColors import TColor
 
 class Minesweeper():
-    '''Classic Minesweeper game implementation for terminal'''
+    '''Classic Minesweeper game implementation with TUI'''
 
     class Field():
         '''Field of mines that needs to be explored'''

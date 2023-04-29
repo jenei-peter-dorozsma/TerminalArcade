@@ -1,9 +1,12 @@
-import os, random
+'''Terminal based Yahtzee game'''
+import os
+import random
 from Games.Assets.terminalColors import TColor
 import Games.Assets.diceArt as da
 
 class Yahtzee:
-    ALPHABET = ['a', 'b', 'c', 'd', 'e']
+    '''Yahtzee game implementation with TUI'''
+    ALPHABET = ('a', 'b', 'c', 'd', 'e')
 
     def __init__(self):
         self.score_board={}
@@ -71,7 +74,7 @@ class Yahtzee:
         print(' Status '.center(60, '-'))
         print(f'Turns left: {self.remaining_rolls}'.ljust(30, ' '), end='')
         print(f'Rerolls left: {self.re_rolls}'.ljust(30, ' '))
-        print(f'\n{TColor.OKGREEN}{TColor.BOLD}Total score: {total_score}{TColor.ENDC}{TColor.ENDC}')
+        print(f'\n{TColor.OKGREEN}Total score: {total_score}{TColor.ENDC}')
 
     def user_consol(self):
         '''Print user consol and handle user inputs'''
@@ -83,7 +86,7 @@ class Yahtzee:
 
         try:
             if command.lower() == 'q':
-                return 0
+                return
             if command.lower() == 'r':
                 if not self.latest_throw == []:
                     self.msg=TColor.WARNING+'Save your throw before next turn.'+TColor.ENDC

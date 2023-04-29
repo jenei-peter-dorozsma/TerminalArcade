@@ -1,3 +1,4 @@
+'''Ascii art for hand signs'''
 HAND_ART = {
     'Paper': [
         '    _______        ',
@@ -74,6 +75,7 @@ HAND_HEIGHT = len(HAND_ART['Rock'])
 HAND_WIDTH = len(HAND_ART['Rock'][0])
 
 def reverse_art_line(art):
+    '''Reverse one line of an ascii art'''
     art=art[::-1]
     art = art.replace(')', '#')
     art = art.replace('(', ')')

@@ -1,7 +1,10 @@
-import os, random
+'''Terminal based Tic Tac Toe game'''
+import os
+import random
 from Games.Assets.terminalColors import TColor
 
 class TicTacToe:
+    '''Tic Tac Toe game implementation with TUI'''
     EMPTY_FIELD = ' '
     MARK_X = f'{TColor.OKBLUE}x{TColor.ENDC}'
     MARK_O = f'{TColor.FAIL}o{TColor.ENDC}'
@@ -16,6 +19,7 @@ class TicTacToe:
         self.end_of_game = False
 
     def new_game(self):
+        '''Start a new game'''
         self.msg=''
         self.gameboard = [self.EMPTY_FIELD for x in range(9) ]
         self.player_mark=self.MARK_X
@@ -30,6 +34,7 @@ class TicTacToe:
         self.user_consol()
 
     def print_board(self, board):
+        '''Print a board on the screen'''
         for i in range(3):
             for j in range(3):
                 print(f' {board[i*3+j]} ', end='')
@@ -40,6 +45,7 @@ class TicTacToe:
         print('')
 
     def user_consol(self):
+        '''Print user consol and handle user inputs'''
         print(' Help '.center(60, '-'))
         self.print_board(range(1,10))
         print(' User consol '.center(60, '-'))
@@ -55,9 +61,9 @@ class TicTacToe:
             if self.end_of_game and command in ('y', 'yes'):
                 self.new_game()
             elif self.end_of_game and command in ('n', 'no'):
-                exit(0)
+                return
             elif command ==  'q':
-                return 0
+                return
             elif 0 < int(command) < 10:
                 if self.gameboard[int(command)-1] != self.EMPTY_FIELD:
                     self.msg='This field is already taken, select another one!'
@@ -73,10 +79,12 @@ class TicTacToe:
         self.print_screen()
 
     def place_a_mark(self, place, mark):
+        '''Place a mark on the board'''
         self.gameboard[place]=mark
         self.check_end_of_game(place)
 
     def check_end_of_game(self, last_step):
+        '''Check if there is any possible step or one of players has won already'''
         paths=self.get_all_path()
         paths = [path for path in paths if last_step in path]
         for path in paths:
@@ -97,6 +105,10 @@ class TicTacToe:
             self.msg='There are no possible moves. It is a TIE!'
 
     def check_row_sum(self, i, check_value):
+        '''Check and compare summary of a row values
+        - Empty fields count as 0
+        - Computer marks count as 1
+        - Player marks count as -1'''
         check_sum = 0
         possible_answer = ''
         for j in range(3):
@@ -113,6 +125,10 @@ class TicTacToe:
             return -1
 
     def check_column_sum(self, i, check_value):
+        '''Check and compare summary of a column values
+        - Empty fields count as 0
+        - Computer marks count as 1
+        - Player marks count as -1'''
         check_sum = 0
         possible_answer = ''
         for j in range(3):
@@ -129,6 +145,10 @@ class TicTacToe:
             return -1
 
     def check_diagonal_sum(self, checkvalue):
+        '''Check and compare summary of diagonal values
+        - Empty fields count as 0
+        - Computer marks count as 1
+        - Player marks count as -1'''
         check_sum_main_diagonal = 0
         possible_answer_main_diagonal = ''
         check_sum_antidiagonal = 0
@@ -148,15 +168,16 @@ class TicTacToe:
             else:
                 possible_answer_antidiagonal = i*3 + 2 - i
 
-        if check_sum_main_diagonal==2:
+        if check_sum_main_diagonal==checkvalue:
             return possible_answer_main_diagonal
 
-        if check_sum_antidiagonal==2:
+        if check_sum_antidiagonal==checkvalue:
             return possible_answer_antidiagonal
 
         return -1
 
     def get_winning_step(self):
+        '''Check if there is a winning position'''
         for i in range(3):
             possible_answer_row = self.check_row_sum(i, 2)
             if possible_answer_row!=-1:
@@ -173,6 +194,7 @@ class TicTacToe:
         return -1
 
     def get_blocking_step(self):
+        '''Check if there is a winning position for the opponent'''
         for i in range(3):
             possible_answer_row = self.check_row_sum(i, -2)
             if possible_answer_row!=-1:
@@ -189,6 +211,7 @@ class TicTacToe:
         return -1
 
     def get_all_path(self):
+        '''Return all possible indexes for possible wins of the game'''
         rows = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         cols = [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
         diags = [[0, 4, 8], [2, 4, 6]]
@@ -197,6 +220,8 @@ class TicTacToe:
         return paths
 
     def get_possible_winning_paths(self, player_mark):
+        '''Return remaining possible winning paths that does not
+        contaion opponents mark'''
         paths = self.get_all_path()
 
         for key, value in enumerate(self.gameboard):
@@ -206,6 +231,8 @@ class TicTacToe:
         return paths
 
     def get_possible_forking_paths(self, player_mark):
+        '''Return the remaining possible winning paths, 
+        that already contains the players mark'''
         paths = self.get_possible_winning_paths(player_mark)
         possible_paths = []
 
@@ -218,6 +245,8 @@ class TicTacToe:
         return possible_paths
 
     def get_forking_step(self):
+        '''Check if there is position that provides 
+        two possible way to win'''
         possible_paths=self.get_possible_forking_paths(self.computer_mark)
         for key, value in enumerate(self.gameboard):
             if value==self.EMPTY_FIELD:
@@ -227,6 +256,8 @@ class TicTacToe:
         return -1
 
     def get_block_fork_step(self):
+        '''Check if there is position that provides 
+        two possible way to win for the opponent'''
         possible_paths=self.get_possible_forking_paths(self.player_mark)
 
         for key, value in enumerate(self.gameboard):
@@ -237,12 +268,15 @@ class TicTacToe:
         return -1
 
     def get_center_step(self):
+        '''Check if the center field is empty'''
         if self.gameboard[4] == self.EMPTY_FIELD:
             return 4
         else:
             return -1
 
     def get_opposite_corner_step(self):
+        '''Check if only one of the corners is taken by the opponent
+        and get the index of the opposite corner'''
         corners = (0, 2, 6, 8)
         corner_dictionary = {0:8, 2:6, 6:2, 8:0}
         possible_corner_answer = -1
@@ -260,6 +294,7 @@ class TicTacToe:
         return -1
 
     def get_random_corner_step(self):
+        '''Get random empty corner field'''
         possible_corners=[]
         corners = (0, 2, 6, 8)
         for i in corners:
@@ -272,6 +307,7 @@ class TicTacToe:
         return -1
 
     def get_random_side_step(self):
+        '''Get random side field'''
         possible_sides=[]
         sides = (1, 3, 5, 7)
         for i in sides:
@@ -284,27 +320,33 @@ class TicTacToe:
         return -1
 
     def get_strategy(self, strategy):
+        '''Strategy steps by Newell, A., & Simon, H. A. (1972).'''
+        strategy_suggested_step=-1
+
         match strategy:
             case 0:
-                return self.get_winning_step()
+                strategy_suggested_step=self.get_winning_step()
             case 1:
-                return self.get_blocking_step()
+                strategy_suggested_step=self.get_blocking_step()
             case 2:
-                return self.get_forking_step()
+                strategy_suggested_step=self.get_forking_step()
             case 3:
-                return self.get_block_fork_step()
+                strategy_suggested_step=self.get_block_fork_step()
             case 4:
-                return self.get_center_step()
+                strategy_suggested_step=self.get_center_step()
             case 5:
-                return self.get_opposite_corner_step()
+                strategy_suggested_step=self.get_opposite_corner_step()
             case 6:
-                return self.get_random_corner_step()
+                strategy_suggested_step=self.get_random_corner_step()
             case 7:
-                return self.get_random_side_step()
+                strategy_suggested_step=self.get_random_side_step()
             case _:
-                return 0
+                strategy_suggested_step=-1
+
+        return strategy_suggested_step
 
     def answer_step(self):
+        '''Check the strategy options one by one and select the first available'''
         for i in range(8):
             next_step = self.get_strategy(i)
             if next_step != -1:

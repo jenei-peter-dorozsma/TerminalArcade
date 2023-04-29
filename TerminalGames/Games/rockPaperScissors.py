@@ -1,8 +1,12 @@
-import os, random
+'''Terminal based Rock-Paper-Scissors game'''
+import os
+import random
 from Games.Assets.terminalColors import TColor
 import Games.Assets.handArt as ha
 
 class RockPaperScissors:
+    '''Rock Paper Scissors game implementation with TUI'''
+
     OPTIONS = {
         'r': {
             'value' : 1,
@@ -35,6 +39,7 @@ class RockPaperScissors:
         self.computer_take=''
 
     def new_game(self):
+        '''Start a new game'''
         self.msg=''
         self.player_score=0
         self.player_take=''
@@ -49,6 +54,7 @@ class RockPaperScissors:
         self.user_consol()
 
     def print_score_board(self):
+        '''Print actual status and latest round to the screen'''
         print(' Status '.center(60, '-'))
         print(' Player score '.center(30, ' '), end='')
         print(' Computer score '.center(30, ' '))
@@ -67,6 +73,7 @@ class RockPaperScissors:
         self.computer_take=''
 
     def user_consol(self):
+        '''Print user consol and handle user inputs'''
         print(' User consol '.center(60, '-'))
 
         print(self.msg)
@@ -74,7 +81,7 @@ class RockPaperScissors:
         self.msg=''
 
         if command.lower() == 'q':
-            return 0
+            return
         elif command.lower() in ('r', 'rock'):
             self.answer_step('r')
         elif command.lower() in ('p', 'paper'):
@@ -83,16 +90,18 @@ class RockPaperScissors:
             self.answer_step('s')
         else:
             self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
-        
+
         self.print_screen()
 
     def answer_step(self, player_take):
+        '''Select a random hand as an aswer step'''
         self.player_take=player_take
         self.computer_take=random.choice(['r', 'p', 's'])
 
         self.update_points()
 
     def update_points(self):
+        '''Analyze the relation of the selected hands and update the points based on the result'''
         result=self.OPTIONS[self.player_take]['value']-self.OPTIONS[self.computer_take]['value']
         if result==0:
             self.msg='It is a TIE. Noone gets point.'
