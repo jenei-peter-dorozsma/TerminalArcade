@@ -19,7 +19,6 @@ from Games.Assets.terminalColors import TColor
 from Games import minefield, yahtzee, tictactoe, rockPaperScissors
 import Games.Assets.handArt as ha
 
-
 TERMINAL_ARCDADE = TColor.HEADER + 'T' + TColor.ENDC
 TERMINAL_ARCDADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
 TERMINAL_ARCDADE +=  TColor.OKCYAN + 'R' + TColor.ENDC
