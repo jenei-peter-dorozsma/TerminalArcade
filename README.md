@@ -1,7 +1,10 @@
 # Terminal Arcade
 <p align="center">
-    <img src="/images/logo_150x150.png" width="150" height="150">
+    <img atl="Terminal Arcade Logo" src="images/logo_150x150.png" width="150" height="150">
 </p>
+
+![Terminal Arcade Logo](images/logo_150x150.png)
+
 <p align="center"><i>
 It's time to drop a coin.<br />
 It's time to light the lights.<br />
