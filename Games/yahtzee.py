@@ -97,6 +97,7 @@ class Yahtzee:
         self.print_throw()
 
         print(self.msg)
+        self.msg=''
         command=input('\nWhat would you like to do?')
 
         try:
@@ -140,8 +141,8 @@ class Yahtzee:
         print('- type R to start a new turn and roll full set of five dice')
         print('- type A-E to lock or unlock a dice')
         print('- type RR to reroll the unlocked dice')
-        print('- type Q exit game and return to main screen')
         print('- type 1-15 save result as combination')
+        print('- type Q exit game and return to main screen')
 
     def print_throw(self):
         '''Print faces of five dice'''
