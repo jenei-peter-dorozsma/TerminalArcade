@@ -124,7 +124,10 @@ class Yahtzee:
                 else:
                     self.lock_die(command)
             elif int(command) in range(1, 16):
-                self.save_combination(int(command)-1)
+                if not self.latest_throw == []:
+                    self.save_combination(int(command)-1)
+                else:
+                    self.msg=TColor.WARNING+'No dice on the tabe. First throw one'+TColor.ENDC
             else:
                 self.msg=TColor.FAIL+'There is no such parameter'+TColor.ENDC
         except ValueError:
