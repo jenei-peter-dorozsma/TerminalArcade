@@ -1,6 +1,6 @@
 # Terminal Arcade
 <p align="center">
-    <img src="images/logo_150x150.png" width="150" height="150">
+    <img src="/images/logo_150x150.png" width="150" height="150">
 </p>
 <p align="center"><i>
 It's time to drop a coin.<br />
@@ -26,8 +26,8 @@ The best way to learn a new programming language, once you're familiar with the 
 
 ## Usage
 ### Main screen
-<img src="images/mainscreen_dark.png" width="300">
-<img src="images/mainscreen_light.png" width="300">
+<img src="/images/mainscreen_dark.png" width="300">
+<img src="/images/mainscreen_light.png" width="300">
 
 On the main screen you can choose from the following options:
 - `1` - Start a new *Minesweeper* game
@@ -38,8 +38,8 @@ On the main screen you can choose from the following options:
 
 ### Games
 #### Minesweeper
-<img src="images/minesweeper_dark.png" width="300">
-<img src="images/minesweeper_light.png" width="300">
+<img src="/images/minesweeper_dark.png" width="300">
+<img src="/images/minesweeper_light.png" width="300">
 
 Minesweeper game. The goal of the game is to find all the mines on the field without stepping on them. You can also mark the mines with flags.
 
@@ -59,8 +59,8 @@ When the minefiled appears you can start looking for mines and marking them. The
 - `q` - Exit game and go back to main screen
 
 #### Yahtzee
-<img src="images/yahtzee_dark.png" width="300">
-<img src="images/yahtzee_light.png" width="300">
+<img src="/images/yahtzee_dark.png" width="300">
+<img src="/images/yahtzee_light.png" width="300">
 
 Yahtzee game, also known as Poker Dice. Each turn you throw with five dice. You can lock and unlock any dice and reroll the remaining ones twice in a turn. Close your turn by assigning the dice set to a combination. Different dice result set means different values at specific combination.  
 
@@ -90,8 +90,8 @@ During the game the following commands are available:
 - `q` - Exit game and go back to main screen
 
 #### Tic Tac Toe
-<img src="images/tictactoe_dark.png" width="300">
-<img src="images/tictactoe_light.png" width="300">
+<img src="/images/tictactoe_dark.png" width="300">
+<img src="/images/tictactoe_light.png" width="300">
 
 Tic Tac Toe game. You play against the computer. You take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.  
 During the game the following commands are available:
@@ -99,8 +99,8 @@ During the game the following commands are available:
 - `q` - Exit game and go back to main screen
 
 #### Rock Paper Scissors
-<img src="images/rockpaperscissors_dark.png" width="300">
-<img src="images/rockpaperscissors_light.png" width="300">
+<img src="/images/rockpaperscissors_dark.png" width="300">
+<img src="/images/rockpaperscissors_light.png" width="300">
 
 Rock Paper Scissors game. You play against the computer. You take one of the following hand signs:
 - `r` - Rock
