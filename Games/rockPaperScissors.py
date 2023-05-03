@@ -65,7 +65,7 @@ class RockPaperScissors:
         '''Print gamescreen to terminal'''
         os.system('clear')
         self.print_score_board()
-        self.user_consol()
+        self.user_console()
 
     def print_score_board(self):
         '''Print actual status and latest round to the screen'''
@@ -86,9 +86,9 @@ class RockPaperScissors:
         self.player_take=''
         self.computer_take=''
 
-    def user_consol(self):
-        '''Print user consol and handle user inputs'''
-        print(' User consol '.center(60, '-'))
+    def user_console(self):
+        '''Print user console and handle user inputs'''
+        print(' User console '.center(60, '-'))
 
         print(self.msg)
         command=input('\nWhat do you choose (r-Rock, p-Paper, s-Scissors, q-End game)?')

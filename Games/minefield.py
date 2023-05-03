@@ -278,7 +278,7 @@ class Minesweeper():
         print(f'- type "{TColor.OKBLUE}Q{TColor.ENDC}" exit game and return to main screen')
 
     def update_screen(self):
-        '''Draw the field and the user consol to the terminal sceen'''
+        '''Draw the field and the user console to the terminal sceen'''
         os.system('clear')
 
         if self.admin_mode or self.end_of_game:
@@ -288,14 +288,14 @@ class Minesweeper():
         if not self.end_of_game:
             print(self.game_board)
 
-        self.guess_consol()
+        self.guess_console()
 
-    def guess_consol(self):
-        '''Display of user consol and handling of input data'''
+    def guess_console(self):
+        '''Display of user console and handling of input data'''
         if not self.end_of_game:
             self.print_help()
 
-        print(' User consol '.center(60, '-'))
+        print(' User console '.center(60, '-'))
         print(f'\n {TColor.WARNING}{self.msg}{TColor.ENDC}')
         self.msg=''
 

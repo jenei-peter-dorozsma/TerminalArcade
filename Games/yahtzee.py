@@ -60,7 +60,7 @@ class Yahtzee:
 
         self.print_score_board()
         self.print_help()
-        self.user_consol()
+        self.user_console()
 
     def print_score_board(self):
         '''Print actual status of the scoreboard'''
@@ -91,9 +91,9 @@ class Yahtzee:
         print(f'Rerolls left: {self.re_rolls}'.ljust(30, ' '))
         print(f'\n{TColor.OKGREEN}Total score: {total_score}{TColor.ENDC}')
 
-    def user_consol(self):
-        '''Print user consol and handle user inputs'''
-        print(' User consol '.center(60, '-'))
+    def user_console(self):
+        '''Print user console and handle user inputs'''
+        print(' User console '.center(60, '-'))
         self.print_throw()
 
         print(self.msg)

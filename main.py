@@ -19,20 +19,20 @@ from Games.Assets.terminalColors import TColor
 from Games import minefield, yahtzee, tictactoe, rockPaperScissors
 import Games.Assets.handArt as ha
 
-TERMINAL_ARCDADE = TColor.HEADER + 'T' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKCYAN + 'R' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKGREEN + 'M' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.WARNING + 'I' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.FAIL + 'N' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.HEADER + 'A' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKBLUE + 'L ' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKCYAN + 'A' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKGREEN + 'R' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.WARNING + 'C' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.FAIL + 'A' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.HEADER + 'D' + TColor.ENDC
-TERMINAL_ARCDADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
+TERMINAL_ARCADE = TColor.HEADER + 'T' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKCYAN + 'R' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKGREEN + 'M' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.WARNING + 'I' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.FAIL + 'N' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.HEADER + 'A' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKBLUE + 'L ' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKCYAN + 'A' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKGREEN + 'R' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.WARNING + 'C' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.FAIL + 'A' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.HEADER + 'D' + TColor.ENDC
+TERMINAL_ARCADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
 
 DESIGN = {
     'Logo': [
@@ -40,7 +40,7 @@ DESIGN = {
         ' ╔══════════════════╗ ',
         ' ║  Welcome         ║ ',
         ' ║        to the    ║ ',
-        f' ║ {TERMINAL_ARCDADE}! ║ ',
+        f' ║ {TERMINAL_ARCADE}! ║ ',
         ' ╚══════════════════╝ ',
         '                      '
     ],

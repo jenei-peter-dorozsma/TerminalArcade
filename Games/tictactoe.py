@@ -45,7 +45,7 @@ class TicTacToe:
         '''Print gamescreen to terminal'''
         os.system('clear')
         self.print_board(self.gameboard)
-        self.user_consol()
+        self.user_console()
 
     def print_board(self, board):
         '''Print a board on the screen'''
@@ -58,11 +58,11 @@ class TicTacToe:
                 print('\n'+self.SEPARATOR_LINE)
         print('')
 
-    def user_consol(self):
-        '''Print user consol and handle user inputs'''
+    def user_console(self):
+        '''Print user console and handle user inputs'''
         print(' Help '.center(60, '-'))
         self.print_board(range(1,10))
-        print(' User consol '.center(60, '-'))
+        print(' User console '.center(60, '-'))
 
         print(self.msg)
         if self.end_of_game:
