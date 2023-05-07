@@ -76,8 +76,8 @@ The combinations you need to collect:
 - `Three of a kind` - Collect three dice face of the same kind. The value equals the summary of the three equal dice face.
 - `Four of a kind` - Collect four dice face of the same kind. The value equals the summary of the four equal dice face.
 - `Full house` - Collect one pair and one three of a kind comination. The value equals the summary of all the dice.
-- `Small strait` - Collect a four item long strait. The value equals the highest small strait in the thrown set.
-- `Large strait` - Collect a five item long strait. The value equals the summary of all the dice.
+- `Small straight` - Collect a four item long straight. The value equals the highest small straight in the thrown set.
+- `Large straight` - Collect a five item long straight. The value equals the summary of all the dice.
 - `Five of a kind` - Collect five dice face of the same kind. The value equals the summary of all the dice.
 - `Joker` - Any combination could fit here. The value equals the summary of all the dice.
 
