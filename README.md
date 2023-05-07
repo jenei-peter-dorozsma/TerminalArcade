@@ -14,7 +14,7 @@ The best way to learn a new programming language, once you're familiar with the 
 
 ## Getting started
 ### Prerequisites
-* **Python:** Version 3.x
+* **Python:** Version 3.10 and above
 * Terminal / Command line prompt
 * **Optimal terminal size:** 100 x 45
 * **Tested on:** MacOs
