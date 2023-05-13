@@ -9,3 +9,16 @@ class TColor:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+def colorize(text):
+    text=text.replace('#H', TColor.HEADER)
+    text=text.replace('#B', TColor.OKBLUE)
+    text=text.replace('#C', TColor.OKCYAN)
+    text=text.replace('#G', TColor.OKGREEN)
+    text=text.replace('#W', TColor.WARNING)
+    text=text.replace('#F', TColor.FAIL)
+    text=text.replace('#E', TColor.ENDC)
+    text=text.replace('#S', TColor.BOLD)
+    text=text.replace('#U', TColor.UNDERLINE)
+
+    return text
