@@ -14,35 +14,24 @@
 # limitations under the License.
 
 import os
-import random
 from Games.Assets.terminalColors import TColor
 from Games import minefield, yahtzee, tictactoe, rockPaperScissors
-import Games.Assets.handArt as ha
-
-TERMINAL_ARCADE = TColor.HEADER + 'T' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKCYAN + 'R' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKGREEN + 'M' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.WARNING + 'I' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.FAIL + 'N' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.HEADER + 'A' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKBLUE + 'L ' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKCYAN + 'A' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKGREEN + 'R' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.WARNING + 'C' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.FAIL + 'A' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.HEADER + 'D' + TColor.ENDC
-TERMINAL_ARCADE +=  TColor.OKBLUE + 'E' + TColor.ENDC
 
 DESIGN = {
     'Logo': [
-        '                      ',
-        ' ╔══════════════════╗ ',
-        ' ║  Welcome         ║ ',
-        ' ║        to the    ║ ',
-        f' ║ {TERMINAL_ARCADE}! ║ ',
-        ' ╚══════════════════╝ ',
-        '                      '
+        'R    ┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬      E',
+        'R  ┬─┴─┬─┴───┴───┴───┴───┴───┴───┴───┴───┴─┬─┴─┬─┴─┬─┴─┬    E',
+        'R┬─┴─┬─┘  EG─┬─ ┌── ┌─┐ ┌┐┌┐ |      ┌─┐ |  ER┌─┴─┬─┴─┬─┴─┬─┴    E',
+        'R┴─┬─┴─┐  EG │  ├─  ├─┘ │└┘│ │ │\ │ ├─┤ │  ER└─┬─┴─┬─┴─┬─┴─┬    E',
+        'R┬─┴─┬─┴─┐EG │  └── │ \ │  │ │ │ \│ │ │ └──ER  └─┬─┴─┬─┴─┬─┴    E',
+        'R┴─┬─┴─┬─┴─┬───┬───┬───┬───┬───┬───┬───┬───┬─┴─┬─┴─┬─┴      E',
+        'R  ┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴───┴───┴───┴───┴───┴─┬─┴─┬      E',
+        'R  ┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┐EG ┌─┐ ┌─┐ ┌── ┌─┐ ┌─  ┌──ER └─┬─┴─┬    E',
+        'R┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┘EG ├─┤ ├─┘ │   ├─┤ │ │ ├─ ER ┌─┴─┬─┴    E',
+        'R┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┐EG │ │ │ \ └── │ │ └─  └──ER └─┬─┴─┬    E',
+        'R┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬───┬───┬───┬───┬───┬───┬─┴─┬─┴─┬  E',
+        'R└─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬E',
+        'R  ┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴E'
     ],
 
     'GameList': [
@@ -59,21 +48,15 @@ def print_main_screen(message=''):
     Display and handle main screen for Terminal Arcade
     '''
     os.system('clear')
-    hand_signs = ('Rock', 'Paper', 'Scissors', 'Metal', 'Pinky', 'Yes', 'Shaka')
-    lefty = random.choice(hand_signs)
-    left_art = ha.HAND_ART[lefty]
-    righty = random.choice(hand_signs)
-    right_art = ha.HAND_ART[righty]
 
-    for row in range(0, ha.HAND_HEIGHT):
-        left_art_row=left_art[row]
+    for row in range(0, len(DESIGN['Logo'])):
         logo_row=DESIGN['Logo'][row]
-        right_art_row=right_art[row]
-        right_art_row=ha.reverse_art_line(right_art_row)
-        print(f'{TColor.OKBLUE}{left_art_row}{TColor.ENDC}', end='')
-        print(logo_row, end='')
-        print(f'{TColor.FAIL}{right_art_row}{TColor.ENDC}')
+        logo_row = logo_row.replace('R', TColor.FAIL)
+        logo_row = logo_row.replace('G', TColor.OKGREEN)
+        logo_row = logo_row.replace('E', TColor.ENDC)
+        print(logo_row)
 
+    print('')
     for i in DESIGN['GameList']:
         print(''.center(21, ' '), end='')
         print(i)
